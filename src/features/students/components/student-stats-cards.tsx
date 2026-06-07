@@ -45,7 +45,7 @@ export function StudentStatsCards({ students }: StudentStatsCardsProps) {
         </div>
       </div>
 
-      <div className="md:col-span-2 relative overflow-hidden bg-primary rounded-xl p-6 flex flex-col justify-center text-primary-foreground shadow-sm">
+      <div className="md:col-span-2 relative overflow-hidden bg-primary opacity-90 rounded-xl p-6 flex flex-col justify-center text-primary-foreground shadow-sm">
         <div className="relative z-10">
           <p className="text-lg font-bold">Performance Report</p>
           <p className="text-sm opacity-90 mt-1">

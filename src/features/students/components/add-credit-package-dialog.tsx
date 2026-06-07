@@ -87,12 +87,12 @@ export function AddCreditPackageDialog({
       <DialogTrigger asChild>
         <Button size="sm">
           <Plus />
-          Register Course
+          Enroll
         </Button>
       </DialogTrigger>
       <DialogContent className={className}>
         <DialogHeader>
-          <DialogTitle>Register Course</DialogTitle>
+          <DialogTitle>Enroll Course</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

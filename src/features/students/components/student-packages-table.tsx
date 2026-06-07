@@ -1,3 +1,4 @@
+import { GraduationCap } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -7,35 +8,51 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetStudentPackages } from "../hooks/api";
-import { AddCreditPackageDialog } from "./add-credit-package-dialog";
 import { PackageTableRow } from "./package-table-row";
+import { AddCreditPackageDialog } from "./add-credit-package-dialog";
 
-const COLUMNS = ["NO", "Course", "Credits", "Expires", "Status", ""];
+interface StudentPackagesTableProps {
+  studentId: number;
+}
 
-export function StudentPackagesTable({ studentId }: { studentId: number }) {
+export function StudentPackagesTable({ studentId }: StudentPackagesTableProps) {
   const { data: packages = [] } = useGetStudentPackages(studentId);
+  const activeCount = packages.filter((p) => p.status === "ACTIVE").length;
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <h2 className="font-medium">Courses</h2>
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <h3 className="text-base font-semibold text-gray-900 flex items-center gap-2">
+            <GraduationCap className="size-4 text-primary" />
+            Enrolled Courses
+          </h3>
+          {activeCount > 0 && (
+            <span className="text-xs font-bold px-2.5 py-1 bg-primary/10 text-primary rounded-full">
+              {activeCount} Active
+            </span>
+          )}
+        </div>
         <AddCreditPackageDialog studentId={studentId} className="sm:max-w-lg" />
       </div>
-      <div className="rounded-md border bg-white">
+      <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow>
-              {COLUMNS.map((col) => (
-                <TableHead key={col}>{col}</TableHead>
-              ))}
+            <TableRow className="bg-gray-50 hover:bg-gray-50">
+              <TableHead className="text-xs font-semibold text-gray-500 uppercase tracking-wider">NO</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Course</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Credits</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Expires</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</TableHead>
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
             {packages.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={COLUMNS.length}
-                  className="text-center text-gray-400"
+                  colSpan={6}
+                  className="text-center text-gray-400 py-10"
                 >
                   No packages.
                 </TableCell>
