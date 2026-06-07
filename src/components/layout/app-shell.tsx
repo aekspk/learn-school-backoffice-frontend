@@ -18,11 +18,11 @@ export default function AppShell() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex h-screen w-full overflow-hidden">
+      <AppSidebar profile={profile} />
+      <div className="flex-1 flex flex-col overflow-hidden ml-64">
         <AppHeader profile={profile} onLogout={handleLogout} />
-        <main className="flex-1 p-6 bg-gray-50 overflow-auto">
+        <main className="flex-1 p-8 bg-background overflow-auto">
           <Outlet />
         </main>
       </div>

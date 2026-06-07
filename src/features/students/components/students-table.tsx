@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,84 +6,67 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DeleteConfirmDialog } from "@/components/shared/delete-confirm-dialog";
 import { useDeleteStudent } from "../hooks/api";
 import type { Student } from "@/types/api";
-import { formatDate } from "@/lib/utils/date-fns";
-import { StudentFormDialog } from "./student-form-dialog";
+import { Spinner } from "@/components/ui/spinner";
+import { StudentTableHeader } from "./student-table-header";
+import { StudentTableRow } from "./student-table-row";
+import { StudentTablePagination } from "./student-table-pagination";
 
-const columns: { header: string; render: (s: Student) => React.ReactNode }[] = [
-  { header: "ID", render: (s) => s.id },
-  { header: "Name", render: (s) => s.name },
-  { header: "Email", render: (s) => s.email },
-  { header: "Phone", render: (s) => s.phone ?? "—" },
-  { header: "Created", render: (s) => formatDate(s.createdAt) },
-];
-
-export function StudentsTable({
-  students,
-  isLoading,
-}: {
+interface StudentsTableProps {
   students: Student[];
   isLoading: boolean;
-}) {
-  const navigate = useNavigate();
+}
+
+export function StudentsTable({ students, isLoading }: StudentsTableProps) {
   const { mutate: deleteStudent, isPending: deleting } = useDeleteStudent();
 
-  if (isLoading) return <p className="text-sm text-gray-500">Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="bg-card rounded-xl border border-border shadow-sm p-10 flex items-center justify-center">
+        <Spinner className="size-6 text-muted-foreground" />
+      </div>
+    );
 
   return (
-    <div className="rounded-md border bg-white">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {columns.map((col) => (
-              <TableHead key={col.header}>{col.header}</TableHead>
-            ))}
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {students.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={columns.length + 1}
-                className="text-center text-gray-400"
-              >
-                No students found.
-              </TableCell>
+    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+      <StudentTableHeader />
+
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted/30 hover:bg-muted/30">
+              <TableHead className="font-semibold text-muted-foreground">NO</TableHead>
+              <TableHead className="font-semibold text-muted-foreground">Name</TableHead>
+              <TableHead className="font-semibold text-muted-foreground">Email</TableHead>
+              <TableHead className="font-semibold text-muted-foreground">Phone</TableHead>
+              <TableHead className="font-semibold text-muted-foreground">Created</TableHead>
+              <TableHead className="font-semibold text-muted-foreground text-right">Actions</TableHead>
             </TableRow>
-          ) : (
-            students.map((student) => (
-              <TableRow
-                key={student.id}
-                className="cursor-pointer"
-                onClick={() => navigate(`/student-management/${student.id}`)}
-              >
-                {columns.map((col) => (
-                  <TableCell key={col.header}>{col.render(student)}</TableCell>
-                ))}
-                <TableCell onClick={(e) => e.stopPropagation()}>
-                  <div className="flex gap-2">
-                    <StudentFormDialog
-                      student={student}
-                      trigger={
-                        <Button size="sm" variant="outline">
-                          Edit
-                        </Button>
-                      }
-                    />
-                    <DeleteConfirmDialog
-                      isPending={deleting}
-                      onConfirm={() => deleteStudent(student.id)}
-                    />
-                  </div>
+          </TableHeader>
+          <TableBody>
+            {students.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
+                  No students found.
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ) : (
+              students.map((student, index) => (
+                <StudentTableRow
+                  key={student.id}
+                  student={student}
+                  index={index}
+                  onDelete={() => deleteStudent(student.id)}
+                  isDeleting={deleting}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      <StudentTablePagination total={students.length} />
     </div>
   );
 }

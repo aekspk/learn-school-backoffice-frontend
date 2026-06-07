@@ -23,6 +23,7 @@ export interface User {
   image: string | null;
   role: Role;
   branchId: number | null;
+  branchName: string | null;
   createdAt: string;
   updatedAt: string;
 }
