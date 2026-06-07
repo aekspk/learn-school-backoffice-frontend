@@ -2,50 +2,38 @@ import { useState } from "react";
 import type { Compensation, CompensationStatus } from "@/types/api";
 import { useGetCompensations } from "./hooks/api";
 import { CompensationStatsCards } from "./components/compensation-stats-cards";
-import { CompensationsFilters } from "./components/compensations-filters";
 import { CompensationsTable } from "./components/compensations-table";
 import { ResolveDialog } from "./components/resolve-dialog";
-import { Spinner } from "@/components/ui/spinner";
 
 export default function CompensationsPage() {
-  const [statusFilter, setStatusFilter] = useState<CompensationStatus | "ALL">(
-    "ALL",
-  );
+  const [statusFilter, setStatusFilter] = useState<CompensationStatus | "ALL">("ALL");
   const [resolveTarget, setResolveTarget] = useState<Compensation | null>(null);
   const params = statusFilter !== "ALL" ? { status: statusFilter } : undefined;
   const { data, isFetching } = useGetCompensations(params);
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Compensations</h1>
-
-      {/* {!isLoading && data.statusStats && (
-        <CompensationStatsCards
-          stats={data.statusStats}
-          isFetching={isFetching}
-        />
-      )} */}
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          Compensations
+        </h1>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          Review and resolve student compensation requests.
+        </p>
+      </div>
 
       <CompensationStatsCards
         stats={data?.statusStats ?? { pending: 0, resolve: 0, rejectCount: 0 }}
         isFetching={isFetching}
       />
 
-      <CompensationsFilters
+      <CompensationsTable
+        compensations={data?.compensations ?? []}
+        isFetching={isFetching}
         statusFilter={statusFilter}
         onStatusChange={setStatusFilter}
+        onResolve={setResolveTarget}
       />
-
-      {isFetching ? (
-        <div className="flex justify-center py-8">
-          <Spinner className="size-6" />
-        </div>
-      ) : (
-        <CompensationsTable
-          compensations={data?.compensations ?? []}
-          onResolve={setResolveTarget}
-        />
-      )}
 
       {resolveTarget && (
         <ResolveDialog
