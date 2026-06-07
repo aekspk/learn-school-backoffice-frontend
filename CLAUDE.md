@@ -37,9 +37,14 @@ services/api/<domain>/      ← raw Axios API functions
 features/<domain>/
   hooks/api.ts              ← React Query useQuery / useMutation wrappers
   schema.ts                 ← Zod validation schemas
-  <Domain>Page.tsx          ← page-level container
-  components/               ← dialogs and sub-components for that domain
+  <Domain>Page.tsx          ← page-level container (imports only; no inline components)
+  <Domain>DetailPage.tsx    ← detail page if the domain has one
+  components/               ← one file per component; no components defined inline in page files
 ```
+
+**Component file rule:** Every named component must live in its own file under `components/`. Page files (`*Page.tsx`) are containers only — they import and compose components but never define them inline. If a component is needed, create a new file for it first, then import it.
+
+**Props interface rule:** Every component that accepts props must declare a named `interface <ComponentName>Props` above the function. Inline type annotation (`{ prop: type }`) on the function parameter is not allowed. All components that render a dialog or modal must include a `className?: string` prop passed to the outermost content element.
 
 Domains: `auth`, `bookings`, `students`, `courses`, `class-sessions`, `credit-packages`, `compensations`, `branches`.
 

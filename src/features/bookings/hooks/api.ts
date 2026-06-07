@@ -4,6 +4,7 @@ import {
   createBookingApi,
   getBookingsApi,
   markAttendanceApi,
+  markAttendancesApi,
 } from "@/services/api/bookings/bookings.service";
 
 export const bookingKeys = {
@@ -31,6 +32,14 @@ export const useMarkAttendance = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: markAttendanceApi,
+    onSuccess: () => qc.invalidateQueries({ queryKey: bookingKeys.all }),
+  });
+};
+
+export const useMarkAttendances = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: markAttendancesApi,
     onSuccess: () => qc.invalidateQueries({ queryKey: bookingKeys.all }),
   });
 };

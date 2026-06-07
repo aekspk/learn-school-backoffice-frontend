@@ -1,13 +1,28 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createStudentApi, deleteStudentApi, getStudentsApi, updateStudentApi } from "@/services/api/students/students.service";
+import { createStudentApi, deleteStudentApi, getStudentApi, getStudentBookingsApi, getStudentPackagesApi, getStudentsApi, updateStudentApi } from "@/services/api/students/students.service";
 
 export const studentKeys = {
   all: ["students"] as const,
   list: () => [...studentKeys.all, "list"] as const,
+  detail: (id: number) => [...studentKeys.all, "detail", id] as const,
+  packages: (id: number) => [...studentKeys.all, id, "packages"] as const,
+  bookings: (id: number) => [...studentKeys.all, id, "bookings"] as const,
 };
 
 export const useGetStudents = () => {
   return useQuery({ queryKey: studentKeys.list(), queryFn: getStudentsApi });
+};
+
+export const useGetStudent = (id: number) => {
+  return useQuery({ queryKey: studentKeys.detail(id), queryFn: () => getStudentApi(id) });
+};
+
+export const useGetStudentPackages = (id: number) => {
+  return useQuery({ queryKey: studentKeys.packages(id), queryFn: () => getStudentPackagesApi(id) });
+};
+
+export const useGetStudentBookings = (id: number) => {
+  return useQuery({ queryKey: studentKeys.bookings(id), queryFn: () => getStudentBookingsApi(id) });
 };
 
 export const useCreateStudent = () => {

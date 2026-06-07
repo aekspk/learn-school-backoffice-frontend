@@ -6,8 +6,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DeleteConfirmDialog } from "@/components/shared/DeleteConfirmDialog";
+import { DeleteConfirmDialog } from "@/components/shared/delete-confirm-dialog";
 import { useCreateCourse, useDeleteCourse, useGetCourses, useUpdateCourse } from "./hooks/api";
+import { formatDate } from "@/lib/utils/date-fns";
 import { courseSchema, type CourseFormValues } from "./schema";
 import type { Course } from "@/types/api";
 
@@ -75,7 +76,7 @@ export default function CoursesPage() {
                   <TableCell>{course.id}</TableCell>
                   <TableCell>{course.name}</TableCell>
                   <TableCell>{course.totalSessions}</TableCell>
-                  <TableCell>{new Date(course.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>{formatDate(course.createdAt)}</TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <CourseFormDialog course={course} trigger={<Button size="sm" variant="outline">Edit</Button>} />

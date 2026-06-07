@@ -6,6 +6,11 @@ export const getStudentsApi = async (): Promise<Student[]> => {
   return res.data;
 };
 
+export const getStudentApi = async (id: number): Promise<Student> => {
+  const res = await api.get<Student>(`/students/${id}`);
+  return res.data;
+};
+
 export const createStudentApi = async (payload: {
   name: string;
   email: string;

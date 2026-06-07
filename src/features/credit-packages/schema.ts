@@ -5,4 +5,6 @@ export const createCreditPackageSchema = z.object({
   totalCredits: z.number().min(1, "Must be at least 1 credit"),
   expiresAt: z.string().min(1, "Expiry date is required"),
 });
-export type CreateCreditPackageFormValues = z.infer<typeof createCreditPackageSchema>;
+export type CreateCreditPackageFormValues = z.infer<
+  typeof createCreditPackageSchema
+>;

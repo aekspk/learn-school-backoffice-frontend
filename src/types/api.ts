@@ -34,12 +34,22 @@ export interface Branch {
   updatedAt: string;
 }
 
+export interface CourseLesson {
+  id: number;
+  courseId: number;
+  order: number;
+  topic: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Course {
   id: number;
   name: string;
   totalSessions: number;
   createdAt: string;
   updatedAt: string;
+  classSessions?: ClassSession[];
 }
 
 export interface Student {
@@ -69,6 +79,7 @@ export interface ClassSession {
   id: number;
   branchId: number;
   courseId: number;
+  courseLessonId: number | null;
   scheduledAt: string;
   durationMin: number;
   totalSeats: number;
@@ -77,6 +88,8 @@ export interface ClassSession {
   updatedAt: string;
   branch?: Branch;
   course?: Course;
+  courseLesson?: CourseLesson | null;
+  bookings: Booking[];
 }
 
 export interface Booking {
@@ -105,6 +118,17 @@ export interface Compensation {
   createdAt: string;
   updatedAt: string;
   booking?: Booking;
+}
+
+export interface CompensationStats {
+  pending: number;
+  resolve: number;
+  rejectCount: number;
+}
+
+export interface CompensationListResponse {
+  statusStats: CompensationStats;
+  compensations: Compensation[];
 }
 
 export interface AuthTokens {

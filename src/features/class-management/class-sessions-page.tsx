@@ -7,10 +7,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DeleteConfirmDialog } from "@/components/shared/DeleteConfirmDialog";
+import { DeleteConfirmDialog } from "@/components/shared/delete-confirm-dialog";
 import { useGetBranches } from "@/features/branches/hooks/api";
 import { useGetCourses } from "@/features/courses/hooks/api";
 import { useCreateClassSession, useDeleteClassSession, useGetClassSessions } from "./hooks/api";
+import { formatDate } from "@/lib/utils/date-fns";
 import { classSessionSchema, type ClassSessionFormValues } from "./schema";
 import type { ClassSession } from "@/types/api";
 
@@ -109,7 +110,7 @@ export default function ClassSessionsPage() {
                   <TableCell>{session.id}</TableCell>
                   <TableCell>{session.branch?.name ?? `#${session.branchId}`}</TableCell>
                   <TableCell>{session.course?.name ?? `#${session.courseId}`}</TableCell>
-                  <TableCell>{new Date(session.scheduledAt).toLocaleString()}</TableCell>
+                  <TableCell>{formatDate(session.scheduledAt)}</TableCell>
                   <TableCell>{session.durationMin} min</TableCell>
                   <TableCell>{session.bookedSeats} / {session.totalSeats}</TableCell>
                   <TableCell><DeleteConfirmDialog isPending={deleting} onConfirm={() => deleteSession(session.id)} /></TableCell>

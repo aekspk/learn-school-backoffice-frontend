@@ -1,5 +1,5 @@
 import api from "@/lib/api/api";
-import type { ClassSession } from "@/types/api";
+import type { ClassSession, Student } from "@/types/api";
 
 export const getClassSessionsApi = async (params?: {
   branchId?: number;
@@ -36,5 +36,10 @@ export const deleteClassSessionApi = async (id: number): Promise<void> => {
 
 export const getClassSessionApi = async (id: number): Promise<ClassSession> => {
   const res = await api.get<ClassSession>(`/class-sessions/${id}`);
+  return res.data;
+};
+
+export const getEligibleStudentsApi = async (id: number): Promise<Student[]> => {
+  const res = await api.get<Student[]>(`/class-sessions/${id}/eligible-students`);
   return res.data;
 };

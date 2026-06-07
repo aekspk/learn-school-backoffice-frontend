@@ -1,10 +1,10 @@
 import api from "@/lib/api/api";
-import type { Compensation, CompensationStatus, CompensationType } from "@/types/api";
+import type { Compensation, CompensationListResponse, CompensationStatus, CompensationType } from "@/types/api";
 
 export const getCompensationsApi = async (params?: {
   status?: CompensationStatus;
-}): Promise<Compensation[]> => {
-  const res = await api.get<Compensation[]>("/compensations", { params });
+}): Promise<CompensationListResponse> => {
+  const res = await api.get<CompensationListResponse>("/compensations", { params });
   return res.data;
 };
 

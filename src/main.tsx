@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import { QueryProvider } from "./providers/QueryProvider";
+import { Toaster } from "sonner";
+import { QueryProvider } from "./providers/query-provider";
 import { router } from "./router";
 import "./index.css";
 
@@ -9,6 +10,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryProvider>
       <RouterProvider router={router} />
+      <Toaster richColors position="top-right" />
     </QueryProvider>
   </StrictMode>,
 );

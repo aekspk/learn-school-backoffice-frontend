@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { PackageStatus } from "@/types/api";
 import { useDeleteCreditPackage, useGetCreditPackages } from "./hooks/api";
-import { CreateCreditPackageDialog } from "./components/CreateCreditPackageDialog";
+import { CreateCreditPackageDialog } from "./components/create-credit-package-dialog";
+import { formatDate } from "@/lib/utils/date-fns";
 
 const statusColor: Record<PackageStatus, string> = {
   ACTIVE: "bg-green-100 text-green-800",
@@ -40,7 +41,7 @@ export default function CreditPackagesPage() {
                   <TableCell>{pkg.totalCredits}</TableCell>
                   <TableCell>{pkg.remainingCredits}</TableCell>
                   <TableCell><Badge className={statusColor[pkg.status]} variant="outline">{pkg.status}</Badge></TableCell>
-                  <TableCell>{new Date(pkg.expiresAt).toLocaleDateString()}</TableCell>
+                  <TableCell>{formatDate(pkg.expiresAt)}</TableCell>
                   <TableCell><Button size="sm" variant="destructive" onClick={() => deletePackage(pkg.id)}>Delete</Button></TableCell>
                 </TableRow>
               ))}

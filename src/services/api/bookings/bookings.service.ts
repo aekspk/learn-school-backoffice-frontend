@@ -29,6 +29,13 @@ export const markAttendanceApi = async ({
   return res.data;
 };
 
+export const markAttendancesApi = async (
+  payload: { bookingId: number; status: BookingStatus }[],
+): Promise<Booking[]> => {
+  const res = await api.patch<Booking[]>("/bookings/attendances", payload);
+  return res.data;
+};
+
 export const cancelBookingApi = async (id: number): Promise<Booking> => {
   const res = await api.delete<Booking>(`/bookings/${id}`);
   return res.data;

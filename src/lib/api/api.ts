@@ -71,6 +71,14 @@ api.interceptors.response.use(
       }
     }
 
+    const backendMessage = error.response?.data?.message;
+    if (backendMessage) {
+      const err = new Error(
+        Array.isArray(backendMessage) ? backendMessage.join(", ") : backendMessage,
+      );
+      return Promise.reject(err);
+    }
+
     return Promise.reject(error);
   },
 );
