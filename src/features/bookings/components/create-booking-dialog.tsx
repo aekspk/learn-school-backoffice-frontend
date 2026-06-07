@@ -28,6 +28,7 @@ import { useGetEligibleStudents } from "@/features/class-management/hooks/api";
 import { useCreateBooking } from "../hooks/api";
 import { createBookingSchema, type CreateBookingFormValues } from "../schema";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
 
 interface CreateBookingDialogProps {
   classSessionId?: number;
@@ -57,8 +58,12 @@ export function CreateBookingDialog({
       },
       {
         onSuccess: () => {
+          toast.success("Booking created successfully");
           setOpen(false);
           form.reset();
+        },
+        onError: (error: Error) => {
+          toast.error(error.message ?? "Failed to create booking");
         },
       },
     );

@@ -1,57 +1,60 @@
-import { useNavigate } from "react-router-dom";
+import { Clock } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { formatTimeOnly } from "@/lib/utils/date-fns";
 
 interface SessionRowProps {
-  id: number;
   topic: string;
   scheduledAt: string;
   durationMin: number;
   bookedSeats: number;
   totalSeats: number;
   className?: string;
+  onClick: () => void;
 }
 
 export default function SessionRow({
-  id,
   topic,
   scheduledAt,
   durationMin,
   bookedSeats,
   totalSeats,
   className,
+  onClick,
 }: SessionRowProps) {
-  const navigate = useNavigate();
   const isFull = bookedSeats >= totalSeats;
+  const occupancyPct = Math.min((bookedSeats / totalSeats) * 100, 100);
 
   return (
-    <button
-      onClick={() => navigate(`/class-management/${id}`)}
+    <div
       className={cn(
-        "w-full flex items-center justify-between px-4 py-2.5 rounded-lg",
-        "text-left hover:bg-indigo-50 transition-colors group",
+        "flex items-center gap-4 px-4 py-3 hover:bg-muted/40 transition-colors cursor-pointer",
         className,
       )}
+      onClick={onClick}
     >
-      <span className="text-sm font-medium text-gray-800 group-hover:text-indigo-700 truncate">
+      <p className="flex-1 min-w-0 text-sm font-medium text-foreground truncate">
         {topic}
-      </span>
+      </p>
 
-      <div className="flex items-center gap-3 shrink-0 ml-4">
-        <span className="text-xs text-gray-500">
-          {formatTimeOnly(scheduledAt, durationMin)}
-        </span>
-        <span
-          className={cn(
-            "text-xs font-semibold px-2 py-0.5 rounded-full",
-            isFull
-              ? "bg-red-100 text-red-600"
-              : "bg-indigo-100 text-indigo-700",
-          )}
-        >
+      <div className="flex items-center gap-1.5 text-sm text-muted-foreground shrink-0">
+        <Clock className="w-3.5 h-3.5" />
+        <span>{formatTimeOnly(scheduledAt, durationMin)}</span>
+      </div>
+
+      <div className="flex items-center gap-2 shrink-0 w-36">
+        <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+          <div
+            className={cn(
+              "h-full rounded-full",
+              isFull ? "bg-destructive" : "bg-primary",
+            )}
+            style={{ width: `${occupancyPct}%` }}
+          />
+        </div>
+        <span className="text-xs text-muted-foreground whitespace-nowrap">
           {bookedSeats}/{totalSeats} seats
         </span>
       </div>
-    </button>
+    </div>
   );
 }

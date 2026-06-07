@@ -8,11 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetClassSessions } from "@/features/class-management/hooks/api";
+import { useGetClassSessionList } from "@/features/class-management/hooks/api";
 import { formatDate } from "@/lib/utils/date-fns";
 
 export default function BookingsPage() {
-  const { data: sessions = [], isLoading } = useGetClassSessions();
+  const { data: sessions = [], isLoading } = useGetClassSessionList();
   const navigate = useNavigate();
 
   return (

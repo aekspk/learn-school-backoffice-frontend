@@ -1,12 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGetStudents } from "./hooks/api";
+import { useGetStudentList } from "./hooks/api";
 import { StudentFormDialog } from "./components/student-form-dialog";
 import { StudentsTable } from "./components/students-table";
 import { StudentStatsCards } from "./components/student-stats-cards";
 
 export default function StudentManagementPage() {
-  const { data: students = [], isLoading } = useGetStudents();
+  const { data: students = [], isLoading } = useGetStudentList();
 
   return (
     <div className="space-y-6">

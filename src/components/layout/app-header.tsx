@@ -19,7 +19,7 @@ export default function AppHeader({ profile, onLogout }: AppHeaderProps) {
   return (
     <header className="h-16 border-b bg-background px-8 flex items-center justify-between shrink-0 sticky top-0 z-40 shadow-sm">
       <span className="text-lg font-bold text-primary">
-        Learn School : {profile.branchName}
+        Learn School : {profile?.branchName ?? ""}
       </span>
 
       <div className="flex items-center gap-5">

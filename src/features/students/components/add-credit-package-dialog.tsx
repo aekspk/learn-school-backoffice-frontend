@@ -66,6 +66,7 @@ export function AddCreditPackageDialog({
       {
         onSuccess: () => {
           qc.invalidateQueries({ queryKey: studentKeys.packages(studentId) });
+          toast.success("Course enrolled successfully");
           setOpen(false);
           form.reset({ studentId, totalCredits: 10, expiresAt: "" });
         },

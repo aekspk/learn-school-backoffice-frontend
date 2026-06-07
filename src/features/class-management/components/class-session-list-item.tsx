@@ -27,7 +27,7 @@ export default function ClassSessionListItem({ session }: Props) {
             <span className="bg-indigo-600 text-white text-xs font-semibold px-2 py-0.5 rounded">
               CLASS
             </span>
-            <span className="font-semibold">{session.courseLesson.topic}</span>
+            <span className="font-semibold">{session.courseLesson?.topic ?? "—"}</span>
           </div>
           <div className="flex flex-wrap gap-3 text-sm text-gray-500">
             <span>

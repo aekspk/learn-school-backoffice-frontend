@@ -25,23 +25,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetStudents } from "@/features/students/hooks/api";
+import { useGetStudentList } from "@/features/students/hooks/api";
 import { useCreateCreditPackage } from "../hooks/api";
 import {
   createCreditPackageSchema,
   type CreateCreditPackageFormValues,
 } from "../schema";
-import { useGetClassSessions } from "@/features/class-management/hooks/api";
+import { useGetClassSessionList } from "@/features/class-management/hooks/api";
 
 export function CreateCreditPackageDialog() {
   const [open, setOpen] = useState(false);
   const { mutate: createPackage, isPending } = useCreateCreditPackage();
-  const { data: students = [] } = useGetStudents();
+  const { data: students = [] } = useGetStudentList();
   const form = useForm<CreateCreditPackageFormValues>({
     resolver: zodResolver(createCreditPackageSchema),
     defaultValues: { studentId: 0, totalCredits: 10, expiresAt: "" },
   });
-  const { data: sessions = [], isLoading } = useGetClassSessions();
+  const { data: sessions = [] } = useGetClassSessionList();
 
   const onSubmit = (values: CreateCreditPackageFormValues) => {
     console.log(values);
@@ -146,8 +146,11 @@ export function CreateCreditPackageDialog() {
                     </FormControl>
                     <SelectContent>
                       {sessions.map((s) => (
-                        <SelectItem key={s.id} value={String(s.course.id)}>
-                          {s.course.name}
+                        <SelectItem
+                          key={s.id}
+                          value={String(s.course?.id ?? s.id)}
+                        >
+                          {s.course?.name ?? `Session #${s.id}`}
                         </SelectItem>
                       ))}
                     </SelectContent>

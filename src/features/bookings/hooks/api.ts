@@ -6,6 +6,7 @@ import {
   markAttendanceApi,
   markAttendancesApi,
 } from "@/services/api/bookings/bookings.service";
+import { QueriesKeyEnum } from "@/lib/queries-key/queries-key";
 
 export const bookingKeys = {
   all: ["bookings"] as const,
@@ -13,7 +14,10 @@ export const bookingKeys = {
     [...bookingKeys.all, params] as const,
 };
 
-export const useGetBookings = (params?: { classSessionId?: number; studentId?: number }) => {
+export const useGetBookings = (params?: {
+  classSessionId?: number;
+  studentId?: number;
+}) => {
   return useQuery({
     queryKey: bookingKeys.list(params),
     queryFn: () => getBookingsApi(params),
@@ -24,7 +28,14 @@ export const useCreateBooking = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: createBookingApi,
-    onSuccess: () => qc.invalidateQueries({ queryKey: bookingKeys.all }),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_class_session],
+      });
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_eligible_students],
+      });
+    },
   });
 };
 
@@ -40,7 +51,10 @@ export const useMarkAttendances = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: markAttendancesApi,
-    onSuccess: () => qc.invalidateQueries({ queryKey: bookingKeys.all }),
+    onSuccess: () =>
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_class_session],
+      }),
   });
 };
 

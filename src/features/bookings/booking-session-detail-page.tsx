@@ -18,13 +18,16 @@ export default function BookingSessionDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <h1 className="text-xl font-semibold">
-          {session.course?.name ?? `Session #${session.id}`}
-        </h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <h1 className="text-xl font-semibold">
+            {session.course?.name ?? `Session #${session.id}`}
+          </h1>
+        </div>
+        <CreateBookingDialog classSessionId={sessionId} className="sm:max-w-md" />
       </div>
 
       <div className="rounded-md border bg-white p-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
@@ -51,13 +54,7 @@ export default function BookingSessionDetailPage() {
       </div>
 
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-medium">Bookings</h2>
-          <CreateBookingDialog
-            classSessionId={sessionId}
-            className="sm:max-w-md"
-          />
-        </div>
+        <h2 className="font-medium">Bookings</h2>
         <SessionBookingsTable classSessionId={sessionId} />
       </div>
     </div>

@@ -27,7 +27,7 @@ export default function CompensationsPage() {
       )} */}
 
       <CompensationStatsCards
-        stats={data?.statusStats}
+        stats={data?.statusStats ?? { pending: 0, resolve: 0, rejectCount: 0 }}
         isFetching={isFetching}
       />
 
@@ -42,7 +42,7 @@ export default function CompensationsPage() {
         </div>
       ) : (
         <CompensationsTable
-          compensations={data.compensations}
+          compensations={data?.compensations ?? []}
           onResolve={setResolveTarget}
         />
       )}

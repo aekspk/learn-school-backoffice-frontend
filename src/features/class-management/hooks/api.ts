@@ -16,16 +16,16 @@ export const classSessionKeys = {
   detail: (id: number) => [...classSessionKeys.all, id] as const,
 };
 
-export const useGetClassSessions = (params?: { branchId?: number }) => {
+export const useGetClassSessionList = (params?: { branchId?: number }) => {
   return useQuery({
-    queryKey: [QueriesKeyEnum.get_class_sessions, params?.branchId],
+    queryKey: [QueriesKeyEnum.get_class_session_list, params?.branchId],
     queryFn: () => getClassSessionsApi(params),
   });
 };
 
 export const useGetClassSession = (id: number) => {
   return useQuery({
-    queryKey: classSessionKeys.detail(id),
+    queryKey: [QueriesKeyEnum.get_class_session, id],
     queryFn: () => getClassSessionApi(id),
   });
 };

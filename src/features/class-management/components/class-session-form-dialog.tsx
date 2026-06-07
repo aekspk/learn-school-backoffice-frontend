@@ -25,49 +25,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { DeleteConfirmDialog } from "@/components/shared/delete-confirm-dialog";
 import { useGetBranches } from "@/features/branches/hooks/api";
 import { useGetCourses } from "@/features/courses/hooks/api";
-import {
-  useCreateClassSession,
-  useDeleteClassSession,
-  useGetClassSessionList,
-} from "./hooks/api";
-import { formatDate } from "@/lib/utils/date-fns";
-import { classSessionSchema, type ClassSessionFormValues } from "./schema";
-import type { ClassSession } from "@/types/api";
+import { useCreateClassSession } from "../hooks/api";
+import { classSessionSchema, type ClassSessionFormValues } from "../schema";
 
-function ClassSessionFormDialog({
-  session,
-  trigger,
-}: {
-  session?: ClassSession;
+interface ClassSessionFormDialogProps {
   trigger: React.ReactNode;
-}) {
+  className?: string;
+}
+
+export default function ClassSessionFormDialog({
+  trigger,
+  className,
+}: ClassSessionFormDialogProps) {
   const [open, setOpen] = useState(false);
   const { mutate: create, isPending } = useCreateClassSession();
   const { data: branches = [] } = useGetBranches();
   const { data: courses = [] } = useGetCourses();
+
   const form = useForm<ClassSessionFormValues>({
     resolver: zodResolver(classSessionSchema),
     defaultValues: {
-      branchId: session?.branchId ?? 0,
-      courseId: session?.courseId ?? 0,
-      scheduledAt: session?.scheduledAt
-        ? new Date(session.scheduledAt).toISOString().slice(0, 16)
-        : "",
-      durationMin: session?.durationMin ?? 60,
-      totalSeats: session?.totalSeats ?? 10,
+      branchId: 0,
+      courseId: 0,
+      scheduledAt: "",
+      durationMin: 60,
+      totalSeats: 10,
     },
   });
+
   const onSubmit = (values: ClassSessionFormValues) => {
     create(
       { ...values, scheduledAt: new Date(values.scheduledAt).toISOString() },
@@ -79,10 +66,11 @@ function ClassSessionFormDialog({
       },
     );
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>New Class Session</DialogTitle>
         </DialogHeader>
@@ -209,72 +197,5 @@ function ClassSessionFormDialog({
         </Form>
       </DialogContent>
     </Dialog>
-  );
-}
-
-export default function ClassSessionsPage() {
-  const { data: sessions = [], isLoading } = useGetClassSessionList();
-  const { mutate: deleteSession, isPending: deleting } =
-    useDeleteClassSession();
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Class Sessions</h1>
-        <ClassSessionFormDialog
-          trigger={<Button size="sm">New Session</Button>}
-        />
-      </div>
-      {isLoading ? (
-        <p className="text-sm text-gray-500">Loading...</p>
-      ) : (
-        <div className="rounded-md border bg-white">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Branch</TableHead>
-                <TableHead>Course</TableHead>
-                <TableHead>Scheduled At</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Seats</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sessions.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center text-gray-400">
-                    No sessions found.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                sessions.map((session) => (
-                  <TableRow key={session.id}>
-                    <TableCell>{session.id}</TableCell>
-                    <TableCell>
-                      {session.branch?.name ?? `#${session.branchId}`}
-                    </TableCell>
-                    <TableCell>
-                      {session.course?.name ?? `#${session.courseId}`}
-                    </TableCell>
-                    <TableCell>{formatDate(session.scheduledAt)}</TableCell>
-                    <TableCell>{session.durationMin} min</TableCell>
-                    <TableCell>
-                      {session.bookedSeats} / {session.totalSeats}
-                    </TableCell>
-                    <TableCell>
-                      <DeleteConfirmDialog
-                        isPending={deleting}
-                        onConfirm={() => deleteSession(session.id)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      )}
-    </div>
   );
 }
