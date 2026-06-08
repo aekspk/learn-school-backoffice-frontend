@@ -4,4 +4,6 @@ export const QueriesKeyEnum = {
   get_class_session: " get_class_session",
   get_eligible_students: "get_eligible_students",
   get_student_list: "get_student_list",
+  get_student: "get_student",
+  get_compensation_list: "get_compensation_list",
 };

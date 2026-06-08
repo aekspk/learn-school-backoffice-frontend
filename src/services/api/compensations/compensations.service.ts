@@ -1,10 +1,17 @@
 import api from "@/lib/api/api";
-import type { Compensation, CompensationListResponse, CompensationStatus, CompensationType } from "@/types/api";
+import type {
+  Compensation,
+  CompensationListResponse,
+  CompensationStatus,
+  CompensationType,
+} from "@/types/api";
 
-export const getCompensationsApi = async (params?: {
+export const getCompensationListApi = async (params?: {
   status?: CompensationStatus;
 }): Promise<CompensationListResponse> => {
-  const res = await api.get<CompensationListResponse>("/compensations", { params });
+  const res = await api.get<CompensationListResponse>("/compensations", {
+    params,
+  });
   return res.data;
 };
 
@@ -24,6 +31,9 @@ export const resolveCompensationApi = async ({
   id: number;
   payload: { status: "RESOLVED" | "REJECTED"; note?: string };
 }): Promise<Compensation> => {
-  const res = await api.patch<Compensation>(`/compensations/${id}/resolve`, payload);
+  const res = await api.patch<Compensation>(
+    `/compensations/${id}/resolve`,
+    payload,
+  );
   return res.data;
 };

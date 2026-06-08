@@ -1,13 +1,18 @@
 import api from "@/lib/api/api";
-import type { Booking, CreditPackage, Student } from "@/types/api";
+import type {
+  Booking,
+  CreditPackage,
+  Student,
+  StudentDetail,
+} from "@/types/api";
 
-export const getStudentsApi = async (): Promise<Student[]> => {
+export const getStudentListApi = async (): Promise<Student[]> => {
   const res = await api.get<Student[]>("/students");
   return res.data;
 };
 
-export const getStudentApi = async (id: number): Promise<Student> => {
-  const res = await api.get<Student>(`/students/${id}`);
+export const getStudentApi = async (id: number): Promise<StudentDetail> => {
+  const res = await api.get<StudentDetail>(`/students/${id}`);
   return res.data;
 };
 
@@ -35,7 +40,9 @@ export const deleteStudentApi = async (id: number): Promise<void> => {
   await api.delete(`/students/${id}`);
 };
 
-export const getStudentPackagesApi = async (id: number): Promise<CreditPackage[]> => {
+export const getStudentPackagesApi = async (
+  id: number,
+): Promise<CreditPackage[]> => {
   const res = await api.get<CreditPackage[]>(`/students/${id}/packages`);
   return res.data;
 };

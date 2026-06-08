@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useGetClassSessionList } from "./hooks/api";
-import { groupSessions } from "./utils";
+import { formatDate } from "@/lib/utils/date-fns";
 import DateGroup from "./components/date-group";
 import ClassSessionFormDialog from "./components/class-session-form-dialog";
 
 export default function ClassManagementPage() {
-  const { data: sessions = [], isFetching } = useGetClassSessionList();
-  const grouped = groupSessions(sessions);
+  const { data: sessionList = [], isFetching } = useGetClassSessionList();
 
   return (
     <div className="space-y-6">
@@ -31,14 +30,14 @@ export default function ClassManagementPage() {
 
       {isFetching ? (
         <p className="text-sm text-muted-foreground">Loading sessions...</p>
-      ) : grouped.length === 0 ? (
+      ) : sessionList.length === 0 ? (
         <p className="text-sm text-muted-foreground">No sessions found.</p>
       ) : (
         <div className="space-y-6">
-          {grouped.map((group) => (
+          {sessionList.map((group) => (
             <DateGroup
               key={group.key}
-              date={group.date}
+              date={formatDate(group.date)}
               courseGroups={group.courseGroups}
             />
           ))}

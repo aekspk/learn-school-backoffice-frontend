@@ -69,7 +69,6 @@ export function AttendanceTable({ bookings, className }: AttendanceTableProps) {
       bookingId: number;
       status: AttendanceStatus;
     }[];
-    console.log(selected);
     markAttendances(selected, {
       onSuccess: () => {
         toast.success("Attendance updated");

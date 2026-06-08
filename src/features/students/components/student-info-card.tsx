@@ -9,7 +9,7 @@ interface StudentInfoCardProps {
 export function StudentInfoCard({ student }: StudentInfoCardProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative overflow-hidden">
-      <div className="absolute top-4 right-6 text-gray-200 pointer-events-none">
+      <div className="absolute top-6 right-6 text-primary opacity-15 pointer-events-none">
         <UserCircle className="size-24" strokeWidth={0.75} />
       </div>
       <h3 className="text-base font-semibold text-gray-900 mb-6 flex items-center gap-2">
@@ -33,7 +33,9 @@ export function StudentInfoCard({ student }: StudentInfoCardProps) {
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
             Joined Date
           </p>
-          <p className="text-base text-gray-900">{formatDate(student.createdAt)}</p>
+          <p className="text-base text-gray-900">
+            {formatDate(student.createdAt)}
+          </p>
         </div>
       </div>
     </div>

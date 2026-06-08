@@ -9,11 +9,10 @@ import {
 } from "@/components/ui/table";
 import type { Booking, BookingStatus } from "@/types/api";
 import { formatDate } from "@/lib/utils/date-fns";
-import { useGetStudentBookings } from "../hooks/api";
 import { cn } from "@/lib/utils/cn";
 
 interface StudentBookingsTableProps {
-  studentId: number;
+  bookings: Booking[];
 }
 
 const STATUS_STYLES: Record<BookingStatus, string> = {
@@ -24,8 +23,7 @@ const STATUS_STYLES: Record<BookingStatus, string> = {
   CANCELLED: "bg-gray-100 text-gray-600",
 };
 
-export function StudentBookingsTable({ studentId }: StudentBookingsTableProps) {
-  const { data: bookings = [] } = useGetStudentBookings(studentId);
+export function StudentBookingsTable({ bookings }: StudentBookingsTableProps) {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -60,7 +58,7 @@ export function StudentBookingsTable({ studentId }: StudentBookingsTableProps) {
               bookings.map((booking: Booking, i: number) => (
                 <TableRow
                   key={booking.id}
-                  className="hover:bg-gray-50/60 transition-colors"
+                  className="hover:bg-gray-50/60 transition-colors h-14"
                 >
                   <TableCell className="text-gray-900">{i + 1}</TableCell>
                   <TableCell>

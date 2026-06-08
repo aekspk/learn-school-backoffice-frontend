@@ -52,8 +52,8 @@ export default function StudentDetailPage() {
         </div>
       </div>
       <StudentInfoCard student={student} />
-      <StudentPackagesTable studentId={studentId} />
-      <StudentBookingsTable studentId={studentId} />
+      <StudentPackagesTable studentId={studentId} packages={student.creditPackages ?? []} />
+      <StudentBookingsTable bookings={student.bookings ?? []} />
     </div>
   );
 }

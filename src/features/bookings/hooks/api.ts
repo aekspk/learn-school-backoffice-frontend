@@ -38,6 +38,9 @@ export const useCreateBooking = () => {
       qc.invalidateQueries({
         queryKey: [QueriesKeyEnum.get_eligible_students],
       });
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_student],
+      });
     },
   });
 };
@@ -54,10 +57,14 @@ export const useMarkAttendances = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: markAttendancesApi,
-    onSuccess: () =>
+    onSuccess: () => {
       qc.invalidateQueries({
         queryKey: [QueriesKeyEnum.get_class_session],
-      }),
+      });
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_class_session],
+      });
+    },
   });
 };
 

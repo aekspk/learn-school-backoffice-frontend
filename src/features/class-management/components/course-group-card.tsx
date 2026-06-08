@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Monitor, MoreHorizontal } from "lucide-react";
-import type { SessionItem } from "../types";
+import type { SessionItem } from "@/types/api";
 import { Card, CardContent } from "@/components/ui/card";
 import SessionRow from "./session-row";
 

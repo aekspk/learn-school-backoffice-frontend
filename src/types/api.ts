@@ -70,11 +70,16 @@ export interface CreditPackage {
   totalCredits: number;
   remainingCredits: number;
   expiresAt: string;
-  status: PackageStatus;
+  status?: PackageStatus;
   createdAt: string;
   updatedAt: string;
   student?: Student;
   course?: Course | null;
+}
+
+export interface StudentDetail extends Student {
+  creditPackages: CreditPackage[];
+  bookings: Booking[];
 }
 
 export interface ClassSession {
@@ -92,6 +97,28 @@ export interface ClassSession {
   course?: Course;
   courseLesson?: CourseLesson | null;
   bookings: Booking[];
+}
+
+export interface SessionItem {
+  id: number;
+  topic: string;
+  scheduledAt: string;
+  durationMin: number;
+  bookedSeats: number;
+  totalSeats: number;
+}
+
+export interface CourseGroup {
+  courseId: number;
+  courseName: string;
+  branchName: string;
+  sessions: SessionItem[];
+}
+
+export interface DateGroupData {
+  key: string;
+  date: string;
+  courseGroups: CourseGroup[];
 }
 
 export interface Booking {

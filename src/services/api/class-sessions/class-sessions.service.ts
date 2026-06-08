@@ -1,10 +1,10 @@
 import api from "@/lib/api/api";
-import type { ClassSession, Student } from "@/types/api";
+import type { ClassSession, DateGroupData, Student } from "@/types/api";
 
 export const getClassSessionsApi = async (params?: {
   branchId?: number;
-}): Promise<ClassSession[]> => {
-  const res = await api.get<ClassSession[]>("/class-sessions", { params });
+}): Promise<DateGroupData[]> => {
+  const res = await api.get<DateGroupData[]>("/class-sessions", { params });
   return res.data;
 };
 

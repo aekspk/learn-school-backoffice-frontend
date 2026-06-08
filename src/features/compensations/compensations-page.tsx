@@ -1,15 +1,17 @@
 import { useState } from "react";
 import type { Compensation, CompensationStatus } from "@/types/api";
-import { useGetCompensations } from "./hooks/api";
+import { useGetCompensationList } from "./hooks/api";
 import { CompensationStatsCards } from "./components/compensation-stats-cards";
 import { CompensationsTable } from "./components/compensations-table";
 import { ResolveDialog } from "./components/resolve-dialog";
 
 export default function CompensationsPage() {
-  const [statusFilter, setStatusFilter] = useState<CompensationStatus | "ALL">("ALL");
+  const [statusFilter, setStatusFilter] = useState<CompensationStatus | "ALL">(
+    "ALL",
+  );
   const [resolveTarget, setResolveTarget] = useState<Compensation | null>(null);
   const params = statusFilter !== "ALL" ? { status: statusFilter } : undefined;
-  const { data, isFetching } = useGetCompensations(params);
+  const { data, isFetching } = useGetCompensationList(params);
 
   return (
     <div className="space-y-6">

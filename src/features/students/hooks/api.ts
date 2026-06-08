@@ -3,9 +3,7 @@ import {
   createStudentApi,
   deleteStudentApi,
   getStudentApi,
-  getStudentBookingsApi,
-  getStudentPackagesApi,
-  getStudentsApi,
+  getStudentListApi,
   updateStudentApi,
 } from "@/services/api/students/students.service";
 import { QueriesKeyEnum } from "@/lib/queries-key/queries-key";
@@ -21,28 +19,14 @@ export const studentKeys = {
 export const useGetStudentList = () => {
   return useQuery({
     queryKey: [QueriesKeyEnum.get_student_list],
-    queryFn: getStudentsApi,
+    queryFn: getStudentListApi,
   });
 };
 
 export const useGetStudent = (id: number) => {
   return useQuery({
-    queryKey: studentKeys.detail(id),
+    queryKey: [QueriesKeyEnum.get_student, id],
     queryFn: () => getStudentApi(id),
-  });
-};
-
-export const useGetStudentPackages = (id: number) => {
-  return useQuery({
-    queryKey: studentKeys.packages(id),
-    queryFn: () => getStudentPackagesApi(id),
-  });
-};
-
-export const useGetStudentBookings = (id: number) => {
-  return useQuery({
-    queryKey: studentKeys.bookings(id),
-    queryFn: () => getStudentBookingsApi(id),
   });
 };
 
@@ -52,7 +36,9 @@ export const useCreateStudent = () => {
     mutationFn: createStudentApi,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: [QueriesKeyEnum.get_student_list] });
-      qc.invalidateQueries({ queryKey: [QueriesKeyEnum.get_eligible_students] });
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_eligible_students],
+      });
     },
   });
 };
@@ -69,6 +55,7 @@ export const useDeleteStudent = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: deleteStudentApi,
-    onSuccess: () => qc.invalidateQueries({ queryKey: studentKeys.all }),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: [QueriesKeyEnum.get_student_list] }),
   });
 };

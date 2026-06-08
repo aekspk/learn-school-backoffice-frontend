@@ -1,5 +1,5 @@
 import { CalendarDays } from "lucide-react";
-import type { CourseGroup } from "../types";
+import type { CourseGroup } from "@/types/api";
 import CourseGroupCard from "./course-group-card";
 
 interface DateGroupProps {
