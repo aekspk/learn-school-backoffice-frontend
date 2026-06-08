@@ -33,6 +33,9 @@ export const useCreateBooking = () => {
         queryKey: [QueriesKeyEnum.get_class_session],
       });
       qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_class_session_list],
+      });
+      qc.invalidateQueries({
         queryKey: [QueriesKeyEnum.get_eligible_students],
       });
     },

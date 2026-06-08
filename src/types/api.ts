@@ -51,6 +51,7 @@ export interface Course {
   createdAt: string;
   updatedAt: string;
   classSessions?: ClassSession[];
+  courseLessons?: CourseLesson[];
 }
 
 export interface Student {

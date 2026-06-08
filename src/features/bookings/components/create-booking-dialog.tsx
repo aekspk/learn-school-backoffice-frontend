@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -17,18 +20,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectInput } from "@/components/ui/select";
 import { useGetEligibleStudents } from "@/features/class-management/hooks/api";
 import { useCreateBooking } from "../hooks/api";
 import { createBookingSchema, type CreateBookingFormValues } from "../schema";
-import { Plus } from "lucide-react";
-import { toast } from "sonner";
 
 interface CreateBookingDialogProps {
   classSessionId?: number;
@@ -77,56 +72,60 @@ export function CreateBookingDialog({
           New Booking
         </Button>
       </DialogTrigger>
-      <DialogContent className={className}>
+      <DialogContent className={`sm:max-w-lg ${className ?? ""}`}>
         <DialogHeader>
-          <DialogTitle>Create Booking</DialogTitle>
+          <DialogTitle className="text-lg font-bold text-foreground">
+            Create Booking
+          </DialogTitle>
         </DialogHeader>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            id="create-booking-form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="studentId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Student</FormLabel>
-                  <Select
-                    onValueChange={(val) => field.onChange(Number(val))}
-                    defaultValue={String(field.value)}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select student" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {students.map((s) => (
-                        <SelectItem key={s.id} value={String(s.id)}>
-                          {s.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <SelectInput
+                      placeholder="Select student"
+                      options={students.map((s) => ({ value: String(s.id), label: s.name }))}
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => field.onChange(Number(val))}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Package is auto-selected by the server if not specified.
             </p>
-            <div className="flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isPending}>
-                {isPending ? "Creating..." : "Create"}
-              </Button>
-            </div>
           </form>
         </Form>
+
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            form="create-booking-form"
+            disabled={isPending}
+            className="shadow-md shadow-primary/20"
+          >
+            {isPending ? "Creating..." : "Create"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

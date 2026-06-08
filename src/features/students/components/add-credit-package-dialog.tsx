@@ -20,13 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectInput } from "@/components/ui/select";
 import { useCreateCreditPackage } from "@/features/credit-packages/hooks/api";
 import { useGetCourses } from "@/features/courses/hooks/api";
 import {
@@ -103,32 +97,19 @@ export function AddCreditPackageDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Course</FormLabel>
-                  <Select
-                    onValueChange={(val) => {
-                      const id = Number(val);
-                      field.onChange(id);
-                      const course = courses.find((c) => c.id === id);
-                      form.setValue("totalCredits", course?.totalSessions ?? 0);
-                    }}
-                    value={field.value ? String(field.value) : ""}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Any course">
-                          {field.value
-                            ? courses.find((c) => c.id === field.value)?.name
-                            : undefined}
-                        </SelectValue>
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {courses.map((c) => (
-                        <SelectItem key={c.id} value={String(c.id)}>
-                          {c.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <SelectInput
+                      placeholder="Select course"
+                      options={courses.map((c) => ({ value: String(c.id), label: c.name }))}
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => {
+                        const id = Number(val);
+                        field.onChange(id);
+                        const course = courses.find((c) => c.id === id);
+                        form.setValue("totalCredits", course?.totalSessions ?? 0);
+                      }}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -140,7 +121,12 @@ export function AddCreditPackageDialog({
                 <FormItem>
                   <FormLabel>Total Credits</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      min={1}
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,7 +145,7 @@ export function AddCreditPackageDialog({
                 </FormItem>
               )}
             />
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Leave Course blank for a global package usable on any course.
             </p>
             <div className="flex justify-end gap-2">

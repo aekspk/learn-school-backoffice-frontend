@@ -1,0 +1,228 @@
+const ic: React.SVGAttributes<SVGElement> = {
+  fill: "none",
+  stroke: "#8b5cf6",
+  strokeWidth: 1.5,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  strokeOpacity: 0.11,
+};
+
+export function LoginBgPattern() {
+  return (
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#dde2f5]">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+          <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+            <path
+              d="M 22 0 L 0 0 0 22"
+              fill="none"
+              stroke="#8b5cf6"
+              strokeWidth="0.45"
+              strokeOpacity="0.08"
+            />
+          </pattern>
+
+          <pattern id="doodles" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+            <rect width="400" height="400" fill="url(#grid)" />
+
+            {/* ── Open Book ── */}
+            <g transform="translate(32,38)" {...ic}>
+              <path d="M0 26 L0 2 Q0 0 2 0 L14 1.5 L14 28 L2 26 Q0 26 0 24Z" />
+              <path d="M28 26 L28 2 Q28 0 26 0 L14 1.5 L14 28 L26 26 Q28 26 28 24Z" />
+              <line x1="3" y1="8" x2="12" y2="8" />
+              <line x1="3" y1="13" x2="12" y2="13" />
+              <line x1="16" y1="8" x2="25" y2="8" />
+              <line x1="16" y1="13" x2="25" y2="13" />
+            </g>
+
+            {/* ── Pencil (diagonal) ── */}
+            <g transform="translate(128,58) rotate(-45)" {...ic}>
+              <rect x="-5" y="-22" width="10" height="28" rx="2" />
+              <path d="M-5 6 L0 16 L5 6Z" />
+              <line x1="-5" y1="-12" x2="5" y2="-12" />
+            </g>
+
+            {/* ── 4-point sparkle ── */}
+            <g transform="translate(198,42)" {...ic}>
+              <path d="M0-13 C-1-3-3-1-13 0 C-3 1-1 3 0 13 C1 3 3 1 13 0 C3-1 1-3 0-13Z" />
+            </g>
+
+            {/* ── Ruler ── */}
+            <g transform="translate(240,36) rotate(18)" {...ic}>
+              <rect x="0" y="0" width="44" height="14" rx="2" />
+              <line x1="8" y1="0" x2="8" y2="8" />
+              <line x1="16" y1="0" x2="16" y2="5" />
+              <line x1="24" y1="0" x2="24" y2="8" />
+              <line x1="32" y1="0" x2="32" y2="5" />
+              <line x1="40" y1="0" x2="40" y2="8" />
+            </g>
+
+            {/* ── Atom ── */}
+            <g transform="translate(350,52)" {...ic}>
+              <circle cx="0" cy="0" r="4.5" />
+              <ellipse cx="0" cy="0" rx="18" ry="7" />
+              <ellipse cx="0" cy="0" rx="18" ry="7" transform="rotate(60)" />
+              <ellipse cx="0" cy="0" rx="18" ry="7" transform="rotate(120)" />
+            </g>
+
+            {/* ── Globe ── */}
+            <g transform="translate(56,148)" {...ic}>
+              <circle cx="0" cy="0" r="16" />
+              <ellipse cx="0" cy="0" rx="8" ry="16" />
+              <line x1="-16" y1="0" x2="16" y2="0" />
+              <line x1="-14" y1="-8" x2="14" y2="-8" />
+              <line x1="-14" y1="8" x2="14" y2="8" />
+            </g>
+
+            {/* ── Double musical note ── */}
+            <g transform="translate(128,128)" {...ic}>
+              <ellipse cx="0" cy="16" rx="5" ry="3.5" transform="rotate(-15)" />
+              <ellipse cx="14" cy="12" rx="5" ry="3.5" transform="rotate(-15)" />
+              <line x1="5" y1="14" x2="5" y2="-6" />
+              <line x1="19" y1="10" x2="19" y2="-10" />
+              <line x1="5" y1="-6" x2="19" y2="-10" />
+            </g>
+
+            {/* ── Apple ── */}
+            <g transform="translate(198,140)" {...ic}>
+              <path d="M0-5 C-12-5-16 6-14 16 C-12 24-6 28 0 28 C6 28 12 24 14 16 C16 6 12-5 0-5Z" />
+              <path d="M0-5 Q2-12 8-10" />
+              <line x1="-6" y1="10" x2="6" y2="10" />
+            </g>
+
+            {/* ── Flask ── */}
+            <g transform="translate(288,138)" {...ic}>
+              <path d="M-5-18 L-5-2 L-16 16 Q-18 22-12 24 L12 24 Q18 22 16 16 L5-2 L5-18Z" />
+              <line x1="-5" y1="-18" x2="5" y2="-18" />
+              <circle cx="-6" cy="16" r="2" />
+              <circle cx="4" cy="20" r="1.5" />
+            </g>
+
+            {/* ── Scissors ── */}
+            <g transform="translate(362,138)" {...ic}>
+              <circle cx="-9" cy="11" r="6" />
+              <circle cx="9" cy="11" r="6" />
+              <line x1="-4" y1="8" x2="14" y2="-14" />
+              <line x1="4" y1="8" x2="-14" y2="-14" />
+            </g>
+
+            {/* ── DNA double helix ── */}
+            <g transform="translate(42,248)" {...ic}>
+              <path d="M-8-22 C8-14 8-6-8 2 C-24 10-24 18-8 26" />
+              <path d="M8-22 C-8-14-8-6 8 2 C24 10 24 18 8 26" />
+              <line x1="-4" y1="-18" x2="4" y2="-18" />
+              <line x1="-8" y1="-8" x2="8" y2="-8" />
+              <line x1="-8" y1="2" x2="8" y2="2" />
+              <line x1="-4" y1="12" x2="4" y2="12" />
+            </g>
+
+            {/* ── Clock ── */}
+            <g transform="translate(136,250)" {...ic}>
+              <circle cx="0" cy="0" r="16" />
+              <line x1="0" y1="0" x2="0" y2="-10" />
+              <line x1="0" y1="0" x2="8" y2="5" />
+              <circle cx="0" cy="0" r="1.5" />
+            </g>
+
+            {/* ── Magnifying glass ── */}
+            <g transform="translate(198,242)" {...ic}>
+              <circle cx="-2" cy="-2" r="12" />
+              <line x1="7" y1="7" x2="16" y2="16" />
+            </g>
+
+            {/* ── Calculator ── */}
+            <g transform="translate(268,234)" {...ic}>
+              <rect x="0" y="0" width="28" height="36" rx="3" />
+              <rect x="4" y="4" width="20" height="9" rx="1" />
+              <circle cx="8" cy="20" r="2" />
+              <circle cx="14" cy="20" r="2" />
+              <circle cx="20" cy="20" r="2" />
+              <circle cx="8" cy="28" r="2" />
+              <circle cx="14" cy="28" r="2" />
+              <circle cx="20" cy="28" r="2" />
+            </g>
+
+            {/* ── Graduation cap ── */}
+            <g transform="translate(356,245)" {...ic}>
+              <polygon points="0,-14 22,0 0,14 -22,0" />
+              <path d="M-12 6 L-12 20 Q0 26 12 20 L12 6" />
+              <line x1="22" y1="0" x2="22" y2="14" />
+            </g>
+
+            {/* ── Backpack ── */}
+            <g transform="translate(56,348)" {...ic}>
+              <rect x="-14" y="-8" width="28" height="28" rx="4" />
+              <path d="M-6-8 Q-6-18 6-18 Q6-8 6-8" />
+              <line x1="-14" y1="4" x2="14" y2="4" />
+              <rect x="-6" y="6" width="12" height="9" rx="2" />
+            </g>
+
+            {/* ── Lightbulb ── */}
+            <g transform="translate(144,348)" {...ic}>
+              <path d="M-10-2 A14 14 0 0 1 10-2 C10 8 6 12 4 16 L-4 16 C-6 12-10 8-10-2Z" />
+              <line x1="-5" y1="16" x2="-5" y2="22" />
+              <line x1="5" y1="16" x2="5" y2="22" />
+              <line x1="-5" y1="22" x2="5" y2="22" />
+              <line x1="0" y1="-18" x2="0" y2="-22" />
+              <line x1="12" y1="-12" x2="15" y2="-15" />
+              <line x1="-12" y1="-12" x2="-15" y2="-15" />
+            </g>
+
+            {/* ── Triangle ruler ── */}
+            <g transform="translate(232,355)" {...ic}>
+              <polygon points="0,-24 24,14 -24,14" />
+              <line x1="0" y1="-16" x2="-4" y2="-10" />
+              <line x1="0" y1="-7" x2="-4" y2="-1" />
+              <line x1="0" y1="2" x2="-4" y2="8" />
+            </g>
+
+            {/* ── Bell ── */}
+            <g transform="translate(316,350)" {...ic}>
+              <path d="M0-18 C-2-18-4-16-4-14 C-12-8-14 0-14 10 L14 10 C14 0 12-8 4-14 C4-16 2-18 0-18Z" />
+              <line x1="-14" y1="10" x2="14" y2="10" />
+              <path d="M-4 10 Q0 16 4 10" />
+              <line x1="0" y1="-18" x2="0" y2="-22" />
+            </g>
+
+            {/* ── Microscope ── */}
+            <g transform="translate(380,355)" {...ic}>
+              <rect x="-5" y="-24" width="10" height="22" rx="2" />
+              <line x1="-9" y1="-24" x2="9" y2="-24" />
+              <ellipse cx="0" cy="-28" rx="4" ry="3" />
+              <path d="M-5-2 L-12 14 L12 14 L5-2" />
+              <line x1="-14" y1="14" x2="14" y2="14" />
+            </g>
+
+            {/* ── Small scattered sparkles ── */}
+            <g stroke="#8b5cf6" strokeWidth="1.2" strokeLinecap="round" fill="none" strokeOpacity="0.08">
+              <line x1="92" y1="95" x2="92" y2="107" />
+              <line x1="86" y1="101" x2="98" y2="101" />
+              <line x1="88" y1="97" x2="96" y2="105" />
+              <line x1="96" y1="97" x2="88" y2="105" />
+              <line x1="168" y1="178" x2="168" y2="188" />
+              <line x1="163" y1="183" x2="173" y2="183" />
+              <line x1="386" y1="180" x2="386" y2="192" />
+              <line x1="380" y1="186" x2="392" y2="186" />
+              <line x1="82" y1="298" x2="82" y2="308" />
+              <line x1="77" y1="303" x2="87" y2="303" />
+              <line x1="390" y1="295" x2="390" y2="305" />
+              <line x1="385" y1="300" x2="395" y2="300" />
+              <circle cx="258" cy="78" r="2" />
+              <circle cx="388" cy="88" r="2" />
+              <circle cx="186" cy="98" r="2" />
+              <circle cx="100" cy="192" r="2" />
+              <circle cx="318" cy="192" r="2" />
+            </g>
+
+            {/* ── Text labels ── */}
+            <text x="386" y="66" fontSize="13" fontFamily="monospace" fontWeight="bold" fill="#8b5cf6" fillOpacity="0.09">ABC</text>
+            <text x="256" y="208" fontSize="13" fontFamily="monospace" fontWeight="bold" fill="#8b5cf6" fillOpacity="0.09">m²</text>
+            <text x="160" y="302" fontSize="12" fontFamily="monospace" fontWeight="bold" fill="#8b5cf6" fillOpacity="0.09">x=y</text>
+            <text x="304" y="118" fontSize="11" fontFamily="monospace" fontWeight="bold" fill="#8b5cf6" fillOpacity="0.09">HₒO</text>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#doodles)" />
+      </svg>
+    </div>
+  );
+}

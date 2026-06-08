@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SelectInput } from "@/components/ui/select";
 import { useMarkAttendance } from "../hooks/api";
 import { attendanceSchema, type AttendanceFormValues } from "../schema";
 import type { Booking } from "@/types/api";
@@ -15,6 +15,13 @@ interface Props {
 }
 
 const TERMINAL = ["ATTENDED", "SKIPPED", "ABSENT"];
+
+const STATUS_OPTIONS = [
+  { value: "ATTENDED", label: "Attended" },
+  { value: "SKIPPED", label: "Skipped" },
+  { value: "ABSENT", label: "Absent" },
+  { value: "CANCELLED", label: "Cancelled" },
+];
 
 export function AttendanceDialog({ booking, open, onOpenChange }: Props) {
   const { mutate: markAttendance, isPending } = useMarkAttendance();
@@ -40,15 +47,13 @@ export function AttendanceDialog({ booking, open, onOpenChange }: Props) {
               <FormField control={form.control} name="status" render={({ field }) => (
                 <FormItem>
                   <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
-                    <SelectContent>
-                      <SelectItem value="ATTENDED">Attended</SelectItem>
-                      <SelectItem value="SKIPPED">Skipped</SelectItem>
-                      <SelectItem value="ABSENT">Absent</SelectItem>
-                      <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <SelectInput
+                      options={STATUS_OPTIONS}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )} />

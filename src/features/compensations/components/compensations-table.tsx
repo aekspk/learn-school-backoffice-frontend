@@ -1,12 +1,6 @@
 import { Download, ListChecks, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectInput } from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -56,20 +50,17 @@ export function CompensationsTable({
           )}
         </div>
         <div className="flex items-center gap-2">
-          <Select
+          <SelectInput
+            options={[
+              { value: "ALL", label: "All Statuses" },
+              { value: "PENDING", label: "Pending" },
+              { value: "RESOLVED", label: "Resolved" },
+              { value: "REJECTED", label: "Rejected" },
+            ]}
             value={statusFilter}
             onValueChange={(v) => onStatusChange(v as CompensationStatus | "ALL")}
-          >
-            <SelectTrigger className="h-8 text-xs w-34 border-border/60">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="ALL">All Statuses</SelectItem>
-              <SelectItem value="PENDING">Pending</SelectItem>
-              <SelectItem value="RESOLVED">Resolved</SelectItem>
-              <SelectItem value="REJECTED">Rejected</SelectItem>
-            </SelectContent>
-          </Select>
+            className="h-8 text-xs w-34 border-border/60"
+          />
           <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs border-border/60">
             <Download className="w-3.5 h-3.5" />
             Export

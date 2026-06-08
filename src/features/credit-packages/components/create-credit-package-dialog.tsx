@@ -18,13 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectInput } from "@/components/ui/select";
 import { useGetStudentList } from "@/features/students/hooks/api";
 import { useCreateCreditPackage } from "../hooks/api";
 import {
@@ -77,23 +71,14 @@ export function CreateCreditPackageDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Student</FormLabel>
-                  <Select
-                    onValueChange={(val) => field.onChange(Number(val))}
-                    defaultValue={String(field.value)}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select student" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {students.map((s) => (
-                        <SelectItem key={s.id} value={String(s.id)}>
-                          {s.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <SelectInput
+                      placeholder="Select student"
+                      options={students.map((s) => ({ value: String(s.id), label: s.name }))}
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => field.onChange(Number(val))}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -135,26 +120,17 @@ export function CreateCreditPackageDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Class Session</FormLabel>
-                  <Select
-                    onValueChange={(val) => field.onChange(Number(val))}
-                    defaultValue={Number(field.value)}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select student" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {sessions.map((s) => (
-                        <SelectItem
-                          key={s.id}
-                          value={String(s.course?.id ?? s.id)}
-                        >
-                          {s.course?.name ?? `Session #${s.id}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <SelectInput
+                      placeholder="Select course"
+                      options={sessions.map((s) => ({
+                        value: String(s.course?.id ?? s.id),
+                        label: s.course?.name ?? `Session #${s.id}`,
+                      }))}
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => field.onChange(Number(val))}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

@@ -186,10 +186,56 @@ function SelectScrollDownButton({
   );
 }
 
+interface SelectInputOption {
+  value: string;
+  label: string;
+}
+
+interface SelectInputProps {
+  options: SelectInputOption[];
+  value?: string;
+  onValueChange?: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+}
+
+function SelectInput({
+  options,
+  value,
+  onValueChange,
+  placeholder,
+  disabled,
+  className,
+}: SelectInputProps) {
+  const items = Object.fromEntries(options.map((o) => [o.value, o.label]));
+
+  return (
+    <Select
+      value={value}
+      onValueChange={onValueChange}
+      items={items}
+      disabled={disabled}
+    >
+      <SelectTrigger className={className}>
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent alignItemWithTrigger={false}>
+        {options.map((o) => (
+          <SelectItem key={o.value} value={o.value}>
+            {o.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+
 export {
   Select,
   SelectContent,
   SelectGroup,
+  SelectInput,
   SelectItem,
   SelectLabel,
   SelectScrollDownButton,

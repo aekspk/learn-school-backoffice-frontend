@@ -42,7 +42,10 @@ export const useCreateClassSession = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: createClassSessionApi,
-    onSuccess: () => qc.invalidateQueries({ queryKey: classSessionKeys.all }),
+    onSuccess: () =>
+      qc.invalidateQueries({
+        queryKey: [QueriesKeyEnum.get_class_session_list],
+      }),
   });
 };
 

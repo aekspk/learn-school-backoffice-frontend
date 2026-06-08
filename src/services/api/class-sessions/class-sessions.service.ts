@@ -9,8 +9,8 @@ export const getClassSessionsApi = async (params?: {
 };
 
 export const createClassSessionApi = async (payload: {
-  branchId: number;
   courseId: number;
+  courseLessonId: number;
   scheduledAt: string;
   durationMin?: number;
   totalSeats: number;
@@ -39,7 +39,11 @@ export const getClassSessionApi = async (id: number): Promise<ClassSession> => {
   return res.data;
 };
 
-export const getEligibleStudentsApi = async (id: number): Promise<Student[]> => {
-  const res = await api.get<Student[]>(`/class-sessions/${id}/eligible-students`);
+export const getEligibleStudentsApi = async (
+  id: number,
+): Promise<Student[]> => {
+  const res = await api.get<Student[]>(
+    `/class-sessions/${id}/eligible-students`,
+  );
   return res.data;
 };
