@@ -100,13 +100,19 @@ export function AddCreditPackageDialog({
                   <FormControl>
                     <SelectInput
                       placeholder="Select course"
-                      options={courses.map((c) => ({ value: String(c.id), label: c.name }))}
+                      options={courses.map((c) => ({
+                        value: String(c.id),
+                        label: c.name,
+                      }))}
                       value={field.value ? String(field.value) : ""}
                       onValueChange={(val) => {
                         const id = Number(val);
                         field.onChange(id);
                         const course = courses.find((c) => c.id === id);
-                        form.setValue("totalCredits", course?.totalSessions ?? 0);
+                        form.setValue(
+                          "totalCredits",
+                          course?.totalSessions ?? 0,
+                        );
                       }}
                     />
                   </FormControl>
@@ -157,7 +163,7 @@ export function AddCreditPackageDialog({
                 Cancel
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Registering..." : "Register"}
+                {isPending ? "Enrolling..." : "Enroll"}
               </Button>
             </div>
           </form>
