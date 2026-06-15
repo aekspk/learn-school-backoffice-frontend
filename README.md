@@ -6,10 +6,10 @@ A school back-office management system built with React 19, TypeScript, Vite, an
 
 ## Prerequisites
 
-| Tool | Recommended Version |
-|------|-------------------|
-| Node.js | >= 18.x |
-| npm | >= 9.x |
+| Tool    | Recommended Version |
+| ------- | ------------------- |
+| Node.js | >= 18.x             |
+| npm     | >= 9.x              |
 
 Verify your versions:
 
@@ -102,11 +102,7 @@ src/
 │   ├── auth/                # Login
 │   ├── students/            # Student management
 │   ├── class-management/    # Class session management
-│   ├── compensations/       # Compensation management
-│   ├── bookings/
-│   ├── branches/
-│   ├── courses/
-│   └── credit-packages/
+│   └── compensations/       # Compensation management
 ├── lib/
 │   ├── api/api.ts           # Axios instance with request/response interceptors
 │   └── utils.ts             # cn() utility helper
@@ -120,14 +116,14 @@ src/
 
 ## Pages & Routes
 
-| Path | Page |
-|------|------|
-| `/login` | Login |
-| `/student-management` | Student list |
-| `/student-management/:id` | Student detail |
-| `/class-management` | Class session list |
-| `/class-management/:id` | Class session detail |
-| `/compensations` | Compensations |
+| Path                      | Page                 |
+| ------------------------- | -------------------- |
+| `/login`                  | Login                |
+| `/student-management`     | Student list         |
+| `/student-management/:id` | Student detail       |
+| `/class-management`       | Class session list   |
+| `/class-management/:id`   | Class session detail |
+| `/compensations`          | Compensations        |
 
 > Other routes (bookings, credit-packages, branches, courses) are under development.
 
@@ -145,17 +141,17 @@ src/
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| React | 19 | UI framework |
-| TypeScript | 6 | Type safety |
-| Vite | 8 | Build tool & dev server |
-| Tailwind CSS | v4 | Styling |
-| shadcn/ui | — | UI component library |
-| TanStack React Query | v5 | Server state management |
-| React Router | v7 | Client-side routing |
-| React Hook Form | v7 | Form state management |
-| Zod | v4 | Schema validation |
-| Axios | — | HTTP client |
-| Lucide React | — | Icons |
-| Sonner | — | Toast notifications |
+| Technology           | Version | Purpose                 |
+| -------------------- | ------- | ----------------------- |
+| React                | 19      | UI framework            |
+| TypeScript           | 6       | Type safety             |
+| Vite                 | 8       | Build tool & dev server |
+| Tailwind CSS         | v4      | Styling                 |
+| shadcn/ui            | —       | UI component library    |
+| TanStack React Query | v5      | Server state management |
+| React Router         | v7      | Client-side routing     |
+| React Hook Form      | v7      | Form state management   |
+| Zod                  | v4      | Schema validation       |
+| Axios                | —       | HTTP client             |
+| Lucide React         | —       | Icons                   |
+| Sonner               | —       | Toast notifications     |
